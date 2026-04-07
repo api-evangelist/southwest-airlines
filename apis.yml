@@ -1,7 +1,12 @@
 aid: southwest-airlines
-url: https://raw.githubusercontent.com/api-evangelist/southwest-airlines/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/southwest-airlines/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis: []
 common:
   - type: Website
     url: https://www.southwest-airlines.com
+description: >-
+  Southwest Airlines is one of the world's most profitable airlines, providing scheduled
+  air transportation in the United States and near-international markets, known for
+  its low fares and customer service.
