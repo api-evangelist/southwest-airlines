@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/southwest-airlines/json-schema/southwest-airlines-flight-schema.json",
+  "title": "Southwest Airlines Flight",
+  "description": "Represents a Southwest Airlines scheduled flight including route, timing, aircraft, and status information.",
+  "type": "object",
+  "properties": {
+    "flightNumber": {
+      "type": "string",
+      "description": "Southwest Airlines flight number (e.g., WN123).",
+      "example": "WN4521"
+    },
+    "departureAirport": {
+      "type": "object",
+      "description": "The origin airport for this flight.",
+      "properties": {
+        "iataCode": { "type": "string", "minLength": 3, "maxLength": 3 },
+        "name": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" }
+      },
+      "required": ["iataCode"]
+    },
+    "arrivalAirport": {
+      "type": "object",
+      "description": "The destination airport for this flight.",
+      "properties": {
+        "iataCode": { "type": "string", "minLength": 3, "maxLength": 3 },
+        "name": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" }
+      },
+      "required": ["iataCode"]
+    },
+    "scheduledDepartureTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled departure date and time in ISO 8601 format."
+    },
+    "scheduledArrivalTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled arrival date and time in ISO 8601 format."
+    },
+    "estimatedDepartureTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Updated estimated departure time if different from scheduled."
+    },
+    "estimatedArrivalTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Updated estimated arrival time if different from scheduled."
+    },
+    "flightStatus": {
+      "type": "string",
+      "enum": ["On Time", "Delayed", "Cancelled", "Departed", "Arrived", "Boarding"],
+      "description": "Current operational status of the flight."
+    },
+    "aircraftType": {
+      "type": "string",
+      "description": "Aircraft model assigned to this flight (e.g., Boeing 737-800).",
+      "example": "Boeing 737 MAX 8"
+    },
+    "tailNumber": {
+      "type": "string",
+      "description": "Aircraft registration tail number."
+    },
+    "seatsAvailable": {
+      "type": "integer",
+      "description": "Number of seats currently available for booking.",
+      "minimum": 0
+    },
+    "stops": {
+      "type": "array",
+      "description": "Intermediate stops for connecting flights.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "iataCode": { "type": "string" },
+          "stopDuration": { "type": "integer", "description": "Stop duration in minutes" }
+        }
+      }
+    }
+  },
+  "required": ["flightNumber", "departureAirport", "arrivalAirport", "scheduledDepartureTime", "scheduledArrivalTime"]
+}

@@ -1,0 +1,82 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "swa": "https://api-evangelist.github.io/southwest-airlines/vocab#",
+
+    "Airline": "schema:Airline",
+    "Flight": "schema:Flight",
+    "FlightReservation": "schema:FlightReservation",
+    "BoardingPass": "schema:Ticket",
+    "Airport": "schema:Airport",
+    "Passenger": "schema:Person",
+    "LoyaltyProgram": "schema:ProgramMembership",
+    "Fare": "schema:Offer",
+
+    "flightNumber": {
+      "@id": "schema:flightNumber",
+      "@type": "xsd:string"
+    },
+    "departureAirport": {
+      "@id": "schema:departureAirport",
+      "@type": "@id"
+    },
+    "arrivalAirport": {
+      "@id": "schema:arrivalAirport",
+      "@type": "@id"
+    },
+    "departureTime": {
+      "@id": "schema:departureTime",
+      "@type": "xsd:dateTime"
+    },
+    "arrivalTime": {
+      "@id": "schema:arrivalTime",
+      "@type": "xsd:dateTime"
+    },
+    "aircraft": {
+      "@id": "schema:vehicle",
+      "@type": "@id"
+    },
+    "flightStatus": {
+      "@id": "swa:flightStatus",
+      "@type": "xsd:string"
+    },
+    "fareClass": {
+      "@id": "swa:fareClass",
+      "@type": "xsd:string"
+    },
+    "fareAmount": {
+      "@id": "schema:price",
+      "@type": "xsd:decimal"
+    },
+    "confirmationNumber": {
+      "@id": "swa:confirmationNumber",
+      "@type": "xsd:string"
+    },
+    "boardingGroup": {
+      "@id": "swa:boardingGroup",
+      "@type": "xsd:string"
+    },
+    "boardingPosition": {
+      "@id": "swa:boardingPosition",
+      "@type": "xsd:integer"
+    },
+    "rapidRewardsNumber": {
+      "@id": "swa:rapidRewardsNumber",
+      "@type": "xsd:string"
+    },
+    "pointsBalance": {
+      "@id": "swa:pointsBalance",
+      "@type": "xsd:integer"
+    },
+    "tierStatus": {
+      "@id": "swa:tierStatus",
+      "@type": "xsd:string"
+    },
+    "iataCode": {
+      "@id": "schema:iataCode",
+      "@type": "xsd:string"
+    }
+  }
+}

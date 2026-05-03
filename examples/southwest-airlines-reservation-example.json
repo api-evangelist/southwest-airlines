@@ -1,0 +1,26 @@
+{
+  "confirmationNumber": "ABC123",
+  "passengers": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "rapidRewardsNumber": "RR7654321",
+      "boardingGroup": "A",
+      "boardingPosition": 12
+    }
+  ],
+  "itinerary": [
+    {
+      "flightNumber": "WN4521",
+      "departureAirportCode": "DAL",
+      "arrivalAirportCode": "MDW",
+      "departureDateTime": "2026-05-15T08:30:00-05:00",
+      "arrivalDateTime": "2026-05-15T11:45:00-05:00",
+      "fareClass": "Wanna Get Away"
+    }
+  ],
+  "totalFare": 148.00,
+  "pointsUsed": 0,
+  "earlyBirdPurchased": true,
+  "createdAt": "2026-04-20T14:32:11Z"
+}

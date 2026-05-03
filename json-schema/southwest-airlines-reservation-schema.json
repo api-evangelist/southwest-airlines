@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/southwest-airlines/json-schema/southwest-airlines-reservation-schema.json",
+  "title": "Southwest Airlines Reservation",
+  "description": "A Southwest Airlines flight reservation (PNR) including passenger details, itinerary, fare, and rapid rewards information.",
+  "type": "object",
+  "properties": {
+    "confirmationNumber": {
+      "type": "string",
+      "description": "Six-character alphanumeric Southwest Airlines confirmation (PNR) code.",
+      "example": "ABC123",
+      "minLength": 6,
+      "maxLength": 6
+    },
+    "passengers": {
+      "type": "array",
+      "description": "List of passengers on this reservation.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "rapidRewardsNumber": { "type": "string" },
+          "knownTravelerNumber": { "type": "string" },
+          "boardingGroup": { "type": "string", "enum": ["A", "B", "C"] },
+          "boardingPosition": { "type": "integer", "minimum": 1, "maximum": 60 }
+        },
+        "required": ["firstName", "lastName"]
+      }
+    },
+    "itinerary": {
+      "type": "array",
+      "description": "List of flight segments in the travel itinerary.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "flightNumber": { "type": "string" },
+          "departureAirportCode": { "type": "string" },
+          "arrivalAirportCode": { "type": "string" },
+          "departureDateTime": { "type": "string", "format": "date-time" },
+          "arrivalDateTime": { "type": "string", "format": "date-time" },
+          "fareClass": {
+            "type": "string",
+            "enum": ["Wanna Get Away", "Wanna Get Away Plus", "Anytime", "Business Select"]
+          }
+        },
+        "required": ["flightNumber", "departureAirportCode", "arrivalAirportCode"]
+      }
+    },
+    "totalFare": {
+      "type": "number",
+      "description": "Total fare paid for this reservation in US dollars.",
+      "minimum": 0
+    },
+    "pointsUsed": {
+      "type": "integer",
+      "description": "Number of Rapid Rewards points applied to this reservation.",
+      "minimum": 0
+    },
+    "earlyBirdPurchased": {
+      "type": "boolean",
+      "description": "Whether EarlyBird Check-In was purchased for this reservation."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the reservation was created."
+    }
+  },
+  "required": ["confirmationNumber", "passengers", "itinerary"]
+}

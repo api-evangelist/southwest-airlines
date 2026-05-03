@@ -1,0 +1,22 @@
+{
+  "flightNumber": "WN4521",
+  "departureAirport": {
+    "iataCode": "DAL",
+    "name": "Dallas Love Field",
+    "city": "Dallas",
+    "state": "TX"
+  },
+  "arrivalAirport": {
+    "iataCode": "MDW",
+    "name": "Chicago Midway International Airport",
+    "city": "Chicago",
+    "state": "IL"
+  },
+  "scheduledDepartureTime": "2026-05-15T08:30:00-05:00",
+  "scheduledArrivalTime": "2026-05-15T11:45:00-05:00",
+  "flightStatus": "On Time",
+  "aircraftType": "Boeing 737 MAX 8",
+  "tailNumber": "N8811Q",
+  "seatsAvailable": 18,
+  "stops": []
+}

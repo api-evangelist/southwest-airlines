@@ -1,0 +1,93 @@
+vocabulary:
+  name: Southwest Airlines Vocabulary
+  description: >-
+    Domain vocabulary for Southwest Airlines, covering flight operations, booking,
+    loyalty programs, in-flight services, and airline industry terminology used
+    across Southwest's customer-facing and operational systems.
+  tags:
+    - Airlines
+    - Aviation
+    - Travel
+    - Fortune 500
+  terms:
+    - term: Flight
+      definition: >-
+        A scheduled air transportation service between an origin and destination
+        airport, identified by a flight number, departure time, and aircraft type.
+      category: Flight Operations
+    - term: Itinerary
+      definition: >-
+        The complete sequence of flights and connections for a passenger's travel
+        plan from origin to final destination.
+      category: Booking
+    - term: Fare
+      definition: >-
+        The price charged for a seat on a Southwest Airlines flight, categorized
+        as Wanna Get Away, Wanna Get Away+, Anytime, or Business Select.
+      category: Pricing
+    - term: Rapid Rewards
+      definition: >-
+        Southwest Airlines' frequent flyer loyalty program in which customers earn
+        points for flights, partner purchases, and credit card spending, redeemable
+        for future travel.
+      category: Loyalty
+    - term: Rapid Rewards Points
+      definition: >-
+        The currency of the Southwest Airlines loyalty program, earned per dollar
+        spent on qualifying purchases and redeemable for flights and other rewards.
+      category: Loyalty
+    - term: Boarding Pass
+      definition: >-
+        The document or mobile credential authorizing a passenger to board a specific
+        Southwest Airlines flight, including boarding group and position assignment.
+      category: Passenger Services
+    - term: Open Seating
+      definition: >-
+        Southwest Airlines' seating policy where passengers choose any available seat
+        after boarding, rather than having assigned seats.
+      category: Passenger Services
+    - term: Boarding Group
+      definition: >-
+        The alphabetical designation (A, B, or C) determining the order in which
+        passengers board a Southwest Airlines flight.
+      category: Passenger Services
+    - term: EarlyBird Check-In
+      definition: >-
+        A paid service that automatically checks a passenger in before the standard
+        24-hour check-in window, typically resulting in an earlier boarding position.
+      category: Passenger Services
+    - term: PNR (Passenger Name Record)
+      definition: >-
+        A unique confirmation code in the airline reservation system that identifies
+        a passenger's booking and itinerary details.
+      category: Booking
+    - term: Check-In
+      definition: >-
+        The process by which a passenger confirms their intent to fly and receives
+        their boarding position, available 24 hours before departure.
+      category: Passenger Services
+    - term: Flight Status
+      definition: >-
+        Real-time information about a flight's current state, including on-time,
+        delayed, cancelled, or in-progress status.
+      category: Flight Operations
+    - term: Companion Pass
+      definition: >-
+        A Rapid Rewards benefit that allows a designated companion to fly free on
+        every flight the member takes for a calendar year.
+      category: Loyalty
+    - term: In-Flight WiFi
+      definition: >-
+        Internet connectivity provided to passengers during a Southwest Airlines
+        flight, delivered through the GoGo Inflight network at southwestwifi.com.
+      category: In-Flight Services
+    - term: Bags Fly Free
+      definition: >-
+        Southwest Airlines' policy of not charging fees for the first two checked
+        bags per customer per flight.
+      category: Policy
+    - term: Tier Status
+      definition: >-
+        A loyalty program classification (A-List, A-List Preferred) earned by
+        frequent Southwest flyers that provides additional benefits and upgrades.
+      category: Loyalty

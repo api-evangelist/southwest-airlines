@@ -1,0 +1,96 @@
+{
+  "title": "Southwest Airlines Flight Structure",
+  "description": "Hierarchical structure of a Southwest Airlines flight, reservation, and loyalty program data entities.",
+  "type": "object",
+  "structure": {
+    "flight": {
+      "description": "A Southwest Airlines scheduled flight segment",
+      "fields": {
+        "flightNumber": "string — e.g. WN4521",
+        "flightStatus": "string — On Time | Delayed | Cancelled | Departed | Arrived | Boarding",
+        "scheduledDepartureTime": "datetime — ISO 8601",
+        "scheduledArrivalTime": "datetime — ISO 8601",
+        "estimatedDepartureTime": "datetime — updated estimate",
+        "estimatedArrivalTime": "datetime — updated estimate",
+        "aircraftType": "string — e.g. Boeing 737 MAX 8",
+        "tailNumber": "string",
+        "seatsAvailable": "integer"
+      },
+      "children": {
+        "departureAirport": {
+          "description": "Origin airport details",
+          "fields": {
+            "iataCode": "string — 3-letter IATA code",
+            "name": "string",
+            "city": "string",
+            "state": "string"
+          }
+        },
+        "arrivalAirport": {
+          "description": "Destination airport details",
+          "fields": {
+            "iataCode": "string — 3-letter IATA code",
+            "name": "string",
+            "city": "string",
+            "state": "string"
+          }
+        },
+        "stops": {
+          "description": "Intermediate connection stops",
+          "type": "array",
+          "items": {
+            "iataCode": "string",
+            "stopDuration": "integer — minutes"
+          }
+        }
+      }
+    },
+    "reservation": {
+      "description": "A Southwest Airlines booking (PNR)",
+      "fields": {
+        "confirmationNumber": "string — 6-char alphanumeric PNR",
+        "totalFare": "number — USD",
+        "pointsUsed": "integer — Rapid Rewards points",
+        "earlyBirdPurchased": "boolean",
+        "createdAt": "datetime"
+      },
+      "children": {
+        "passengers": {
+          "description": "Travelers on the reservation",
+          "type": "array",
+          "items": {
+            "firstName": "string",
+            "lastName": "string",
+            "rapidRewardsNumber": "string",
+            "knownTravelerNumber": "string",
+            "boardingGroup": "string — A | B | C",
+            "boardingPosition": "integer — 1–60"
+          }
+        },
+        "itinerary": {
+          "description": "Flight segments in the travel plan",
+          "type": "array",
+          "items": {
+            "flightNumber": "string",
+            "departureAirportCode": "string",
+            "arrivalAirportCode": "string",
+            "departureDateTime": "datetime",
+            "arrivalDateTime": "datetime",
+            "fareClass": "string — Wanna Get Away | Wanna Get Away Plus | Anytime | Business Select"
+          }
+        }
+      }
+    },
+    "rapidRewardsMembership": {
+      "description": "Southwest Airlines Rapid Rewards loyalty account",
+      "fields": {
+        "memberNumber": "string",
+        "tierStatus": "string — Standard | A-List | A-List Preferred",
+        "pointsBalance": "integer",
+        "tierQualifyingPoints": "integer — points toward next tier",
+        "companionPassQualified": "boolean",
+        "companionPassDesignee": "string"
+      }
+    }
+  }
+}
