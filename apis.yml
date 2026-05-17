@@ -75,7 +75,7 @@ common:
     url: https://www.southwest.com
   - type: Investor Relations
     url: https://ir.southwest.com/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/SouthwestAir
   - type: LinkedIn
     url: https://www.linkedin.com/company/southwest-airlines
