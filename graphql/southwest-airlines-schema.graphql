@@ -1,0 +1,819 @@
+"""
+Southwest Airlines GraphQL Schema
+
+Conceptual schema representing the Southwest Airlines flight, booking, loyalty,
+and travel domain. Based on public knowledge of Southwest's products and policies
+including Rapid Rewards, open seating, and no-change-fee ticketing.
+"""
+
+# ─────────────────────────────────────────────
+# Scalar types
+# ─────────────────────────────────────────────
+
+scalar Date
+scalar DateTime
+scalar Time
+scalar Money
+scalar IATACode
+scalar UUID
+
+# ─────────────────────────────────────────────
+# Enumerations
+# ─────────────────────────────────────────────
+
+enum FareClass {
+  WANNA_GET_AWAY
+  WANNA_GET_AWAY_PLUS
+  ANYTIME
+  BUSINESS_SELECT
+}
+
+enum BoardingGroupLabel {
+  A
+  B
+  C
+}
+
+enum FlightStatusCode {
+  ON_TIME
+  DELAYED
+  CANCELLED
+  DIVERTED
+  LANDED
+  DEPARTED
+  SCHEDULED
+}
+
+enum TierLevel {
+  A_LIST
+  A_LIST_PREFERRED
+  COMPANION_PASS
+  STANDARD
+}
+
+enum BaggageStatus {
+  INCLUDED
+  FEE_APPLIES
+  OVERSIZED
+}
+
+enum SeatZone {
+  FORWARD_CABIN
+  MIDDLE_CABIN
+  AFT_CABIN
+}
+
+enum CheckInMethod {
+  MOBILE
+  WEB
+  KIOSK
+  AGENT
+}
+
+enum RefundPolicy {
+  REFUNDABLE
+  NON_REFUNDABLE
+  TRAVEL_FUND
+}
+
+enum VoucherType {
+  LUV_VOUCHER
+  TRAVEL_FUND
+  POINTS_CREDIT
+}
+
+enum DelayReason {
+  WEATHER
+  AIR_TRAFFIC_CONTROL
+  MECHANICAL
+  CREW
+  LATE_AIRCRAFT
+  SECURITY
+}
+
+# ─────────────────────────────────────────────
+# Airport and Terminal
+# ─────────────────────────────────────────────
+
+"""A commercial airport served by Southwest Airlines."""
+type Airport {
+  code: IATACode!
+  name: String!
+  city: String!
+  state: String
+  country: String!
+  terminal: Terminal
+  timezone: String!
+  latitude: Float
+  longitude: Float
+}
+
+"""A terminal or concourse within an airport."""
+type Terminal {
+  id: ID!
+  name: String!
+  airport: Airport!
+  gates: [Gate!]!
+}
+
+"""A departure or arrival gate at an airport terminal."""
+type Gate {
+  id: ID!
+  number: String!
+  terminal: Terminal!
+  status: String
+}
+
+# ─────────────────────────────────────────────
+# Aircraft
+# ─────────────────────────────────────────────
+
+"""An aircraft operated by Southwest Airlines."""
+type Aircraft {
+  tailNumber: String!
+  model: String!
+  variant: String
+  seatingCapacity: Int!
+  configurationRows: Int
+}
+
+"""Boeing 737 aircraft — the only aircraft type in Southwest's fleet."""
+type Boeing737 implements Aircraft {
+  tailNumber: String!
+  model: String!
+  variant: String
+  seatingCapacity: Int!
+  configurationRows: Int
+  maxFlightRange: Int
+  engineCount: Int
+}
+
+# ─────────────────────────────────────────────
+# Seating
+# ─────────────────────────────────────────────
+
+"""
+Southwest open seating model — passengers choose any available seat after boarding.
+No seat assignments are issued; position is determined by boarding group and position number.
+"""
+type OpenSeating {
+  description: String!
+  boardingGroupsAvailable: [BoardingGroupLabel!]!
+  totalPositions: Int!
+}
+
+"""A physical seat row and position on an aircraft."""
+type Seat {
+  row: Int!
+  position: String!
+  zone: SeatZone
+  isExitRow: Boolean!
+  isWindowAvailable: Boolean!
+  isAisleAvailable: Boolean!
+}
+
+# ─────────────────────────────────────────────
+# Boarding
+# ─────────────────────────────────────────────
+
+"""The boarding position assigned to a passenger (e.g., A32)."""
+type BoardingPosition {
+  group: BoardingGroupLabel!
+  number: Int!
+  displayLabel: String!
+}
+
+"""A boarding group (A, B, or C) used during Southwest open seating boarding."""
+type BoardingGroup {
+  label: BoardingGroupLabel!
+  startPosition: Int!
+  endPosition: Int!
+}
+
+"""A boarding pass issued to a passenger for a specific flight."""
+type BoardingPass {
+  id: UUID!
+  passenger: Passenger!
+  flight: Flight!
+  boardingPosition: BoardingPosition!
+  issuedAt: DateTime!
+  barcode: String
+  isMobilePass: Boolean!
+}
+
+"""Mobile boarding pass delivered to a passenger's device."""
+type MobileBoarding {
+  boardingPass: BoardingPass!
+  deepLinkUrl: String
+  walletPassUrl: String
+  expiresAt: DateTime!
+}
+
+# ─────────────────────────────────────────────
+# Flight
+# ─────────────────────────────────────────────
+
+"""A flight number identifier used to identify a Southwest scheduled service."""
+type FlightNumber {
+  carrier: String!
+  number: String!
+  suffix: String
+  display: String!
+}
+
+"""A scheduled flight between two airports."""
+type Flight {
+  id: UUID!
+  flightNumber: FlightNumber!
+  aircraft: Boeing737
+  origin: Airport!
+  destination: Airport!
+  departure: Departure!
+  arrival: Arrival!
+  status: FlightStatus!
+  fareClasses: [FareClass!]!
+  openSeating: OpenSeating!
+  duration: Int
+  distance: Int
+  operatedBy: String
+}
+
+"""Departure information for a flight leg."""
+type Departure {
+  airport: Airport!
+  gate: Gate
+  scheduledTime: DateTime!
+  estimatedTime: DateTime
+  actualTime: DateTime
+  terminal: Terminal
+}
+
+"""Arrival information for a flight leg."""
+type Arrival {
+  airport: Airport!
+  gate: Gate
+  scheduledTime: DateTime!
+  estimatedTime: DateTime
+  actualTime: DateTime
+  terminal: Terminal
+  baggageClaim: String
+}
+
+"""Real-time operational status of a flight."""
+type FlightStatus {
+  code: FlightStatusCode!
+  description: String
+  delay: Delay
+  cancel: Cancel
+  updatedAt: DateTime!
+}
+
+"""Delay details for a flight."""
+type Delay {
+  minutes: Int!
+  reason: DelayReason
+  description: String
+  newDepartureTime: DateTime
+}
+
+"""Cancellation details for a flight."""
+type Cancel {
+  reason: String
+  cancelledAt: DateTime!
+  rebookingOptions: [Flight!]
+}
+
+"""A scheduled service pattern for a route on given days of the week."""
+type FlightSchedule {
+  id: UUID!
+  flightNumber: FlightNumber!
+  route: FlightRoute!
+  daysOfWeek: [String!]!
+  departureTime: Time!
+  arrivalTime: Time!
+  effectiveFrom: Date!
+  effectiveTo: Date!
+  fareClassesOffered: [FareClass!]!
+}
+
+"""A city-pair route served by Southwest Airlines."""
+type FlightRoute {
+  id: UUID!
+  origin: Airport!
+  destination: Airport!
+  distance: Int
+  isNonstop: Boolean!
+  flights: [Flight!]!
+}
+
+"""A nonstop flight between two cities."""
+type DirectFlight {
+  flight: Flight!
+  route: FlightRoute!
+  isNonstop: Boolean!
+}
+
+"""A connecting itinerary with one or more intermediate stops."""
+type Connection {
+  segments: [Flight!]!
+  totalDuration: Int!
+  layovers: [Layover!]!
+  origin: Airport!
+  destination: Airport!
+}
+
+"""A layover between two connecting flight segments."""
+type Layover {
+  airport: Airport!
+  durationMinutes: Int!
+  arrivalFlight: Flight!
+  departureFlight: Flight!
+}
+
+# ─────────────────────────────────────────────
+# Fare Products
+# ─────────────────────────────────────────────
+
+"""Wanna Get Away — Southwest's lowest, most restricted fare."""
+type WannaGetAway {
+  fareClass: FareClass!
+  description: String!
+  refundPolicy: RefundPolicy!
+  pointsEarningMultiplier: Float!
+  earlyBirdEligible: Boolean!
+  changeAllowed: Boolean!
+}
+
+"""Wanna Get Away Plus — enhanced low fare with more flexibility."""
+type WannaGetAwayPlus {
+  fareClass: FareClass!
+  description: String!
+  refundPolicy: RefundPolicy!
+  pointsEarningMultiplier: Float!
+  earlyBirdEligible: Boolean!
+  transferable: Boolean!
+}
+
+"""Anytime fare — fully flexible, refundable fare."""
+type Anytime {
+  fareClass: FareClass!
+  description: String!
+  refundPolicy: RefundPolicy!
+  pointsEarningMultiplier: Float!
+  priorityBoardingIncluded: Boolean!
+  standbyEligible: Boolean!
+}
+
+"""Business Select — Southwest's premium fare with highest boarding priority."""
+type BusinessSelect {
+  fareClass: FareClass!
+  description: String!
+  refundPolicy: RefundPolicy!
+  pointsEarningMultiplier: Float!
+  boardingGroup: BoardingGroupLabel!
+  drinkCouponIncluded: Boolean!
+  prioritySecurity: Boolean!
+}
+
+# ─────────────────────────────────────────────
+# Passengers
+# ─────────────────────────────────────────────
+
+"""A traveler booked on a Southwest Airlines flight."""
+type Passenger {
+  id: UUID!
+  firstName: String!
+  lastName: String!
+  dateOfBirth: Date
+  rapidRewardsAccount: RapidRewardsAccount
+  knownTravelerNumber: String
+  redressNumber: String
+  contactEmail: String
+  contactPhone: String
+}
+
+# ─────────────────────────────────────────────
+# Rapid Rewards Loyalty
+# ─────────────────────────────────────────────
+
+"""The Rapid Rewards loyalty program for Southwest Airlines."""
+type RapidRewards {
+  programName: String!
+  currency: String!
+  tierLevels: [Tier!]!
+  companionPassThreshold: Int!
+  pointsExpiryPolicy: String
+}
+
+"""A member account in the Rapid Rewards loyalty program."""
+type RapidRewardsAccount {
+  accountNumber: String!
+  member: Passenger!
+  tier: Tier!
+  points: Points!
+  companionPass: CompanionPass
+  earningCategories: [EarningCategory!]!
+  enrolledAt: Date!
+}
+
+"""A tier level within the Rapid Rewards program."""
+type Tier {
+  level: TierLevel!
+  name: String!
+  annualRequirements: TierRequirements!
+  benefits: [String!]!
+}
+
+"""Tier qualification requirements."""
+type TierRequirements {
+  tierQualifyingPoints: Int
+  tierQualifyingFlights: Int
+  orCondition: Boolean!
+}
+
+"""A-List tier — entry-level elite status in Rapid Rewards."""
+type AList {
+  tier: Tier!
+  priorityBoarding: Boolean!
+  priorityCheckin: Boolean!
+  bonusPointsPercentage: Int!
+  dedicatedPhoneLine: Boolean!
+}
+
+"""A-List Preferred — top elite tier in Rapid Rewards."""
+type AListPreferred {
+  tier: Tier!
+  priorityBoarding: Boolean!
+  bonusPointsPercentage: Int!
+  freeSameDayStandby: Boolean!
+  dedicatedPhoneLine: Boolean!
+  freeWifi: Boolean!
+}
+
+"""A companion designated by a Companion Pass holder."""
+type Companion {
+  passengerId: UUID!
+  firstName: String!
+  lastName: String!
+  designatedAt: Date!
+  validThrough: Date!
+}
+
+"""Companion Pass — allows one companion to fly free on every booked flight."""
+type CompanionPass {
+  holder: RapidRewardsAccount!
+  companion: Companion!
+  earnedAt: Date!
+  validThrough: Date!
+  pointsEarnedToQualify: Int!
+}
+
+"""A Rapid Rewards points balance."""
+type Points {
+  available: Int!
+  pending: Int!
+  expiringPoints: Int
+  expiringDate: Date
+  lifetimeEarned: Int!
+}
+
+"""A bonus points promotion or earning opportunity."""
+type PointsBonus {
+  id: UUID!
+  name: String!
+  description: String!
+  bonusMultiplier: Float
+  flatBonus: Int
+  eligibleFareClasses: [FareClass!]!
+  validFrom: Date!
+  validTo: Date!
+}
+
+"""A category used to earn Rapid Rewards points (flights, partners, credit card, etc.)."""
+type EarningCategory {
+  id: UUID!
+  name: String!
+  description: String!
+  basePointsPerDollar: Float
+  partnerName: String
+  eligible: Boolean!
+}
+
+# ─────────────────────────────────────────────
+# Booking and Reservation
+# ─────────────────────────────────────────────
+
+"""A completed booking for one or more passengers."""
+type Booking {
+  id: UUID!
+  confirmationNumber: String!
+  pnr: PNR!
+  itinerary: Itinerary!
+  passengers: [Passenger!]!
+  fareClass: FareClass!
+  totalAmount: Money!
+  pointsUsed: Int
+  refundPolicy: RefundPolicy!
+  bookedAt: DateTime!
+  earlyBird: EarlyBird
+  upgradeBoarding: UpgradeBoarding
+}
+
+"""A reservation record for a Southwest flight booking."""
+type Reservation {
+  id: UUID!
+  booking: Booking!
+  status: String!
+  checkedIn: Boolean!
+  boardingPasses: [BoardingPass!]
+}
+
+"""A Passenger Name Record (PNR) — the booking reference in airline systems."""
+type PNR {
+  recordLocator: String!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  flights: [Flight!]!
+  passengers: [Passenger!]!
+}
+
+"""A confirmation sent after a booking is completed."""
+type Confirmation {
+  confirmationNumber: String!
+  booking: Booking!
+  sentTo: String!
+  sentAt: DateTime!
+}
+
+"""A complete travel itinerary for a booked trip."""
+type Itinerary {
+  id: UUID!
+  outbound: [Flight!]!
+  returning: [Flight!]
+  connections: [Connection!]
+  origin: Airport!
+  destination: Airport!
+  departureDate: Date!
+  returnDate: Date
+  totalDuration: Int
+}
+
+# ─────────────────────────────────────────────
+# Ancillaries
+# ─────────────────────────────────────────────
+
+"""EarlyBird Check-In — automatic 36-hour check-in for an earlier boarding position."""
+type EarlyBird {
+  id: UUID!
+  booking: Booking!
+  passenger: Passenger!
+  fee: Money!
+  purchasedAt: DateTime!
+  boardingPositionImprovedBy: Int
+}
+
+"""Checked-in EarlyBird status for a reservation."""
+type CheckInEarlyBird {
+  earlyBird: EarlyBird!
+  checkInTime: DateTime!
+  boardingPosition: BoardingPosition!
+}
+
+"""Upgraded Boarding — purchase an A1-A15 boarding position at the gate."""
+type UpgradeBoarding {
+  id: UUID!
+  flight: Flight!
+  passenger: Passenger!
+  boardingPosition: BoardingPosition!
+  fee: Money!
+  purchasedAt: DateTime!
+}
+
+# ─────────────────────────────────────────────
+# Vouchers and Credits
+# ─────────────────────────────────────────────
+
+"""A travel voucher or credit issued by Southwest Airlines."""
+type Voucher {
+  id: UUID!
+  type: VoucherType!
+  amount: Money!
+  issuedTo: Passenger
+  issuedAt: Date!
+  expiresAt: Date!
+  redeemed: Boolean!
+  redeemedAt: Date
+}
+
+"""A LUV Voucher — Southwest's dollar-denominated gift certificate."""
+type LUVVoucher {
+  voucher: Voucher!
+  pin: String!
+  code: String!
+  transferable: Boolean!
+}
+
+"""A Travel Fund — credit held from a cancelled reservation."""
+type TravelFund {
+  voucher: Voucher!
+  sourceConfirmation: String!
+  associatedPassenger: Passenger
+  usableByOthers: Boolean!
+}
+
+"""A credit issued from a cancelled non-refundable booking."""
+type CancellationCredit {
+  id: UUID!
+  originalBooking: Booking!
+  creditAmount: Money!
+  issuedAt: DateTime!
+  expiresAt: Date!
+  usedAmount: Money
+}
+
+# ─────────────────────────────────────────────
+# Fees and Policies
+# ─────────────────────────────────────────────
+
+"""Southwest's change fee policy (no change fees as of 2020)."""
+type ChangeFee {
+  amount: Money!
+  fareClass: FareClass!
+  waivedForAllFares: Boolean!
+  policyDescription: String!
+}
+
+"""Southwest's baggage allowance policy."""
+type BaggagePolicy {
+  freeBagsAllowed: Int!
+  freeBagWeightLimitLbs: Int!
+  freeBagSizeLimitInches: Int!
+  overweightFee: Money!
+  oversizeFee: Money!
+  additionalBagFee: Money!
+  description: String!
+}
+
+"""Details of a free checked bag allowance."""
+type FreeBaggage {
+  bagsIncluded: Int!
+  weightLimitLbs: Int!
+  policy: BaggagePolicy!
+}
+
+"""An overweight or oversized bag subject to additional fees."""
+type OverweightBag {
+  weightLbs: Int!
+  fee: Money!
+  policy: BaggagePolicy!
+}
+
+"""Whether a fare is fully refundable."""
+type Refundable {
+  fareClass: FareClass!
+  refundable: Boolean!
+  refundMethod: String!
+  processingDays: Int
+}
+
+"""Whether a fare is non-refundable (credit may still be issued)."""
+type NonRefundable {
+  fareClass: FareClass!
+  travelFundIssued: Boolean!
+  creditExpiryMonths: Int
+}
+
+# ─────────────────────────────────────────────
+# Check-In
+# ─────────────────────────────────────────────
+
+"""A passenger check-in event."""
+type Checkin {
+  id: UUID!
+  reservation: Reservation!
+  passenger: Passenger!
+  method: CheckInMethod!
+  checkedInAt: DateTime!
+  boardingPosition: BoardingPosition!
+  boardingPass: BoardingPass!
+}
+
+# ─────────────────────────────────────────────
+# Hold and API Access
+# ─────────────────────────────────────────────
+
+"""A temporary hold placed on a booking price before purchase."""
+type HoldPolicy {
+  durationHours: Int!
+  feeApplies: Boolean!
+  holdFee: Money
+  description: String!
+}
+
+"""An API key used to authenticate requests to Southwest's partner APIs."""
+type APIKey {
+  id: UUID!
+  key: String!
+  name: String!
+  issuedTo: String!
+  createdAt: DateTime!
+  expiresAt: DateTime
+  scopes: [String!]!
+  active: Boolean!
+}
+
+"""A bearer token issued for an authenticated session."""
+type Token {
+  accessToken: String!
+  tokenType: String!
+  expiresIn: Int!
+  scope: String
+  issuedAt: DateTime!
+}
+
+# ─────────────────────────────────────────────
+# Root Query, Mutation, Subscription
+# ─────────────────────────────────────────────
+
+type Query {
+  """Look up an airport by IATA code."""
+  airport(code: IATACode!): Airport
+
+  """Search all airports Southwest serves."""
+  airports(country: String, state: String): [Airport!]!
+
+  """Retrieve a flight by its ID."""
+  flight(id: UUID!): Flight
+
+  """Search available flights between two airports on a given date."""
+  searchFlights(origin: IATACode!, destination: IATACode!, departureDate: Date!, returnDate: Date, passengers: Int): [Flight!]!
+
+  """Get real-time status for a flight number and date."""
+  flightStatus(flightNumber: String!, date: Date!): FlightStatus
+
+  """Retrieve a booking by confirmation number."""
+  booking(confirmationNumber: String!): Booking
+
+  """Retrieve a Rapid Rewards account by account number."""
+  rapidRewardsAccount(accountNumber: String!): RapidRewardsAccount
+
+  """Get current points balance for a member."""
+  points(accountNumber: String!): Points
+
+  """List active vouchers and travel funds for a passenger."""
+  vouchers(passengerId: UUID!): [Voucher!]!
+
+  """Get baggage policy details."""
+  baggagePolicy: BaggagePolicy!
+
+  """Get EarlyBird availability for a flight."""
+  earlyBirdAvailability(flightId: UUID!, passengerId: UUID!): EarlyBird
+
+  """Get Upgraded Boarding availability at the gate."""
+  upgradeBoardingAvailability(flightId: UUID!): [UpgradeBoarding!]!
+}
+
+type Mutation {
+  """Book a flight for one or more passengers."""
+  bookFlight(
+    flightId: UUID!
+    passengerIds: [UUID!]!
+    fareClass: FareClass!
+    paymentToken: String!
+  ): Booking
+
+  """Cancel an existing booking."""
+  cancelBooking(confirmationNumber: String!): CancellationCredit
+
+  """Add EarlyBird Check-In to a booking."""
+  purchaseEarlyBird(bookingId: UUID!, passengerId: UUID!): EarlyBird
+
+  """Purchase Upgraded Boarding at the gate."""
+  purchaseUpgradeBoarding(flightId: UUID!, passengerId: UUID!): UpgradeBoarding
+
+  """Check in a passenger for a flight."""
+  checkIn(confirmationNumber: String!, passengerId: UUID!, method: CheckInMethod!): Checkin
+
+  """Designate or change a Companion Pass companion."""
+  designateCompanion(accountNumber: String!, companionPassengerId: UUID!): CompanionPass
+
+  """Redeem a LUV Voucher against a booking."""
+  redeemVoucher(bookingId: UUID!, voucherCode: String!, pin: String!): Booking
+
+  """Issue an API key for partner access."""
+  issueAPIKey(name: String!, scopes: [String!]!): APIKey
+
+  """Refresh an authentication token."""
+  refreshToken(refreshToken: String!): Token
+}
+
+type Subscription {
+  """Subscribe to real-time status updates for a flight."""
+  flightStatusUpdates(flightId: UUID!): FlightStatus!
+
+  """Subscribe to gate change notifications."""
+  gateChanges(flightId: UUID!): Gate!
+
+  """Subscribe to boarding position assignments as they are issued."""
+  boardingPositionAssigned(confirmationNumber: String!): BoardingPosition!
+}
