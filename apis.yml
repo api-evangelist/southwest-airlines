@@ -33,9 +33,9 @@ apis:
     url: https://www.southwest.com/
   - type: Documentation
     url: https://www.southwest.com/
-  - type: JSON Schema
+  - type: JSONSchema
     url: https://raw.githubusercontent.com/api-evangelist/southwest-airlines/refs/heads/main/json-schema/southwest-airlines-flight-schema.json
-  - type: JSON Schema
+  - type: JSONSchema
     url: https://raw.githubusercontent.com/api-evangelist/southwest-airlines/refs/heads/main/json-schema/southwest-airlines-reservation-schema.json
   - url: graphql/southwest-airlines-graphql.md
     type: GraphQL
@@ -80,7 +80,7 @@ common:
   url: https://twitter.com/SouthwestAir
 - type: Open Source
   url: https://github.com/SouthwestAir/.github
-- type: JSON-LD Context
+- type: JSONLDContext
   url: https://raw.githubusercontent.com/api-evangelist/southwest-airlines/refs/heads/main/json-ld/southwest-airlines-context.jsonld
 - type: Vocabulary
   url: https://raw.githubusercontent.com/api-evangelist/southwest-airlines/refs/heads/main/vocabulary/southwest-airlines-vocabulary.yml
