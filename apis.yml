@@ -68,6 +68,10 @@ apis:
   - type: Documentation
     url: https://apievangelist.com/2016/10/06/your-southwest-airlines-flight-has-an-api/
 common:
+- type: VulnerabilityDisclosure
+  url: security/southwest-airlines-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/southwest-airlines-domain-security.yml
 - type: Website
   url: https://www.southwest.com
 - type: Investor Relations
