@@ -1,7 +1,9 @@
 ---
 title: Southwest Airlines Co. News and Press Releases
 url: https://www.prnewswire.com/news/southwest-airlines-co./
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Southwest Airlines" press release artificial intelligence'
 position: 4
 source: serpapi-google

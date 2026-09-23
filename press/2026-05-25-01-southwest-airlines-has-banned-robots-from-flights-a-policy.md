@@ -1,7 +1,9 @@
 ---
 title: Southwest Airlines has banned robots from flights, a policy ...
 url: https://www.facebook.com/KING5News/posts/southwest-airlines-has-banned-robots-from-flights-a-policy-change-that-came-afte/1452439983594853/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Southwest Airlines" press release artificial intelligence'
 position: 1
 source: serpapi-google

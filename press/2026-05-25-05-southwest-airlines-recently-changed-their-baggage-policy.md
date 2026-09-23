@@ -1,7 +1,9 @@
 ---
 title: Southwest Airlines recently changed their baggage policy ...
 url: https://www.facebook.com/Fox32Chicago/posts/southwest-airlines-recently-changed-their-baggage-policy-after-a-passenger-at-da/1449339787239217/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Southwest Airlines" press release artificial intelligence'
 position: 5
 source: serpapi-google

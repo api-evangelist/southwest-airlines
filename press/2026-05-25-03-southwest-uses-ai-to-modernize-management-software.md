@@ -1,7 +1,9 @@
 ---
 title: Southwest uses AI to modernize management software
 url: https://www.pwc.com/us/en/library/case-studies/southwest-ai-software-update.html
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Southwest Airlines" press release artificial intelligence'
 position: 3
 source: serpapi-google
