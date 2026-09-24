@@ -61,8 +61,6 @@ apis:
     url: https://raw.githubusercontent.com/api-evangelist/southwest-airlines/refs/heads/main/json-schema/southwest-airlines-flight-schema.json
   - type: JSONSchema
     url: https://raw.githubusercontent.com/api-evangelist/southwest-airlines/refs/heads/main/json-schema/southwest-airlines-reservation-schema.json
-  - url: graphql/southwest-airlines-graphql.md
-    type: GraphQL
 - aid: southwest-airlines:southwest-rapid-rewards-api
   name: Southwest Airlines Rapid Rewards API
   description: The Rapid Rewards loyalty program API enables management of points
