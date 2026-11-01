@@ -66,93 +66,147 @@
 
 Southwest Airlines is one of the world's most profitable airlines and the largest domestic air carrier in the United States by number of passengers. The company provides scheduled air transportation in the United States and near-international markets, known for its low fares, no baggage fees policy, and customer service. Southwest Airlines is a Fortune 500 company headquartered in Dallas, Texas.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/southwest-airlines/refs/heads/main/apis.yml)
+**Areas:** Fortune 500 · Airlines · Aviation · Travel
 
-## Scope
+## Southwest Airlines on APIs.io
 
-- **Type:** Contract
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for Southwest Airlines is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/southwest-airlines/](https://apis.io/providers/southwest-airlines/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (3)
 
-- Fortune 500
-- Airlines
-- Aviation
-- Travel
+- [Southwest Airlines Flight API](https://apis.io/apis/southwest-airlines/southwest-flight-api/) — The Southwest Airlines internal flight booking API powers the southwest.com website for searching and booking flights. It provides flight availability,…
+- [Southwest Airlines Rapid Rewards API](https://apis.io/apis/southwest-airlines/southwest-rapid-rewards-api/) — The Rapid Rewards loyalty program API enables management of points balances, redemption, and tier status for Southwest Airlines frequent fliers.
+- [Southwest Airlines In-Flight Network API](https://apis.io/apis/southwest-airlines/southwest-inflight-api/) — The Southwest Airlines in-flight network provides a JSON API available at getconnected.southwestwifi.com/current.json while onboard the aircraft. It…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-21
-- **Modified:** 2026-05-02
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### GraphQL (1)
 
-### Southwest Airlines Flight API
+GraphQL schemas.
 
-The Southwest Airlines internal flight booking API powers the southwest.com website for searching and booking flights. It provides flight availability, pricing, schedules, and air booking shopping capabilities.
+- [Moved to /providers/southwest-airlines/](https://apis.io/graphqls/southwest-airlines/southwest-airlines-graphql/)
 
-- [Website](https://www.southwest.com/)
-- [JSON Schema - Flight](https://raw.githubusercontent.com/api-evangelist/southwest-airlines/refs/heads/main/json-schema/southwest-airlines-flight-schema.json)
-- [JSON Schema - Reservation](https://raw.githubusercontent.com/api-evangelist/southwest-airlines/refs/heads/main/json-schema/southwest-airlines-reservation-schema.json)
+#### JSON Schema (2)
 
-### Southwest Airlines Rapid Rewards API
+The data models the API reads and writes.
 
-The Rapid Rewards loyalty program API enables management of points balances, redemption, and tier status for Southwest Airlines frequent fliers.
+- [Southwest Airlines Flight](https://apis.io/schemas/southwest-airlines/southwest-airlines-flight/)
+- [Southwest Airlines Reservation](https://apis.io/schemas/southwest-airlines/southwest-airlines-reservation/)
 
-- [Rapid Rewards](https://www.southwest.com/rapid-rewards/)
+#### JSON Structure (1)
 
-### Southwest Airlines In-Flight Network API
+Data models expressed in JSON Structure.
 
-The Southwest Airlines in-flight network provides a JSON API available at getconnected.southwestwifi.com/current.json while onboard the aircraft. It delivers real-time flight information including speed, altitude, position, weather, and flight status to connected passengers.
+- [Southwest Airlines Flight Structure](https://apis.io/json-structure/southwest-airlines/southwest-airlines-flight-structure/)
 
-- [Blog Post](https://apievangelist.com/2016/10/06/your-southwest-airlines-flight-has-an-api/)
+#### JSON-LD (1)
 
-## Common Properties
+Linked-data contexts for the provider's vocabulary.
+
+- [Southwest Airlines Context](https://apis.io/jsonld/southwest-airlines/southwest-airlines-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Southwest Airlines Vocabulary](https://apis.io/vocabularies/southwest-airlines/southwest-airlines-vocabulary/)
+
+#### Examples (2)
+
+Example requests and responses.
+
+- [Southwest Airlines Flight Example](https://apis.io/examples/southwest-airlines/southwest-airlines-flight-example/)
+- [Southwest Airlines Reservation Example](https://apis.io/examples/southwest-airlines/southwest-airlines-reservation-example/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Southwest Airlines — jsonschema rules](https://apis.io/rules/southwest-airlines/southwest-airlines-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Southwest Airlines Domain Security](https://apis.io/security/southwest-airlines/southwest-airlines-domain-security/)
+- [Southwest Airlines Vulnerability Disclosure](https://apis.io/security/southwest-airlines/southwest-airlines-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Southwest Airlines Plans Pricing](https://apis.io/plans/southwest-airlines/southwest-airlines-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Southwest Airlines Rate Limits](https://apis.io/rate-limits/southwest-airlines/southwest-airlines-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Southwest Airlines Finops](https://apis.io/finops/southwest-airlines/southwest-airlines-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.southwest.com)
-- [Investor Relations](https://ir.southwest.com/)
-- [GitHub Organization](https://github.com/SouthwestAir)
-- [Open Source Initiative](https://github.com/SouthwestAir/.github)
-- [LinkedIn](https://www.linkedin.com/company/southwest-airlines)
-- [X (Twitter)](https://twitter.com/SouthwestAir)
+- [GitHub](https://github.com/SouthwestAir)
 
-## Artifacts
+## API Evangelist rating
 
-### JSON Schemas
+**Kin Score 19.1** — emerging · rubric 0.24.0 · scored 2026-10-17
 
-| Schema | Description |
+| Facet | Score |
 |---|---|
-| [southwest-airlines-flight-schema.json](json-schema/southwest-airlines-flight-schema.json) | Southwest Airlines scheduled flight with route, timing, and status |
-| [southwest-airlines-reservation-schema.json](json-schema/southwest-airlines-reservation-schema.json) | Flight reservation (PNR) with passengers, itinerary, and fare data |
+| Discoverability | 53.6 |
+| Contract quality | 26.7 |
+| Contract governance | 23.5 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 9.5 |
+| Access clarity | 5.3 |
 
-### JSON Structure
+**Agent readiness 0.6** — human-only
 
-| Structure | Description |
+| Agent-readiness dimension | Result |
 |---|---|
-| [southwest-airlines-flight-structure.json](json-structure/southwest-airlines-flight-structure.json) | Hierarchical structure of flight, reservation, and loyalty data |
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-### JSON-LD Context
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
 
-| Context | Description |
-|---|---|
-| [southwest-airlines-context.jsonld](json-ld/southwest-airlines-context.jsonld) | Linked data context mapping Southwest Airlines vocabulary to schema.org |
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/southwest-airlines/](https://apis.io/providers/southwest-airlines/).
 
-### Examples
+## How this profile is made
 
-| Example | Description |
-|---|---|
-| [southwest-airlines-flight-example.json](examples/southwest-airlines-flight-example.json) | Sample flight from Dallas Love Field to Chicago Midway |
-| [southwest-airlines-reservation-example.json](examples/southwest-airlines-reservation-example.json) | Sample reservation with passenger and itinerary details |
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-### Vocabulary
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Southwest Airlines: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
-| Vocabulary | Description |
-|---|---|
-| [southwest-airlines-vocabulary.yml](vocabulary/southwest-airlines-vocabulary.yml) | Domain vocabulary for Southwest Airlines flight and loyalty operations |
+## Open an issue
 
-## Maintainers
-
-**FN:** API Evangelist
-
-**Email:** info@apievangelist.com
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/southwest-airlines/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
